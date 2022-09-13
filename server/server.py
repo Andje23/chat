@@ -22,3 +22,13 @@ class Server:
         self.server.listen(0)
         threading.Thread(target=self.connect_handler).start()
         logger.info("Сервер запущен!")
+
+    def connect_handler(self) -> None:
+        while True:
+            client, address = self.server.accept()
+            if client not in self.all_client:
+                self.all_client.append(client)
+                threading.Thread(target=self.message_handler, args=(client,)).start()
+                client.send('Успешное подключение к чату!'.encode('utf-8'))
+            time.sleep(1)
+
