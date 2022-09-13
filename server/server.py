@@ -32,3 +32,18 @@ class Server:
                 client.send('Успешное подключение к чату!'.encode('utf-8'))
             time.sleep(1)
 
+    def message_handler(self, client_socket) -> None:
+        while True:
+            message = client_socket.recv(1024)
+            print(message)
+
+            # Delete the current socket (Удаляем текущий сокет)
+            if message == b'exit':
+                self.all_client.remove(client_socket)
+                break
+
+            for client in self.all_client:
+                if client != client_socket:
+                    client.send(message)
+            time.sleep(1)
+
