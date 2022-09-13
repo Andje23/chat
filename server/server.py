@@ -47,3 +47,5 @@ class Server:
                     client.send(message)
             time.sleep(1)
 
+myserver = Server('127.0.0.1', 5555)
+
