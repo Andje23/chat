@@ -69,3 +69,7 @@ class Client(QtWidgets.QMainWindow):
                 self.ip = file['ip']
                 self.port = file['port']
 
+            # Uploading companion data (Подгрузка данных собеседника)
+            with shelve.open(os.path.join('friend_id', os.listdir('friend_id')[0])) as file:
+                self.friend_public_key = file['pubkey']
+
