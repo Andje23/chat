@@ -61,3 +61,11 @@ class Client(QtWidgets.QMainWindow):
             message = 'Также необходимо сгенерировать свой идентификатор'
             self.ui.plainTextEdit.appendPlainText(message)
 
+        else:
+            # Uploading current client data (Подгрузка данных текущего клиента)
+            with shelve.open('private') as file:
+                self.my_public_key = file['pubkey']
+                self.my_private_key = file['privkey']
+                self.ip = file['ip']
+                self.port = file['port']
+
