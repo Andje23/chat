@@ -53,5 +53,11 @@ class Client(QtWidgets.QMainWindow):
             self.ui.plainTextEdit.appendPlainText(message)
 
         # Checking if a personal ID has been created (Проверка, создан ли личный идентификатор)
-
+        if not os.path.exists('private'):
+            self.ui.lineEdit.setEnabled(False)
+            self.ui.pushButton.setEnabled(False)
+            self.ui.pushButton_2.setEnabled(False)
+            self.ui.pushButton_4.setEnabled(False)
+            message = 'Также необходимо сгенерировать свой идентификатор'
+            self.ui.plainTextEdit.appendPlainText(message)
 
