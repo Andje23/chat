@@ -27,3 +27,31 @@ class MessageMonitor(QtCore.QThread):
                 self.my_signal.emit(decrypt_message.decode('utf-8'))
             except:  # Data from the server (not encrypted) Данные от сервера (не зашрованные)
                 self.my_signal.emit(self.message.decode('utf-8'))
+
+
+class Client(QtWidgets.QMainWindow):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+        self.ip = None
+        self.port = None
+        self.friend_public_key = None
+
+        # Current client encryption keys (Ключи шифрования текущего клиента)
+        self.my_public_key = None
+        self.my_private_key = None
+
+        # Check for the presence of the interlocutor ID (Проверка на наличие идентификатора собеседника)
+        if len(os.listdir('friend_id')) == 0:
+            self.ui.lineEdit.setEnabled(False)
+            self.ui.pushButton.setEnabled(False)
+            self.ui.pushButton_2.setEnabled(False)
+            self.ui.pushButton_4.setEnabled(False)
+            message = 'Поместите идентификатор собеседника в "friend_id"'
+            self.ui.plainTextEdit.appendPlainText(message)
+
+        # Checking if a personal ID has been created (Проверка, создан ли личный идентификатор)
+
+
