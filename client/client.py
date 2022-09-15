@@ -73,3 +73,16 @@ class Client(QtWidgets.QMainWindow):
             with shelve.open(os.path.join('friend_id', os.listdir('friend_id')[0])) as file:
                 self.friend_public_key = file['pubkey']
 
+            message = 'Подключитесь к серверу'
+            self.plaintextEdit.appendPlainText(message)
+            self.ui.lineEdit.setEnabled(False)
+            self.ui.pushButton.setEnabled(False)
+            self.ui.pushButton_4.setEnabled(False)
+            self.ui.pushButton_2.setEnabled(True)
+
+        # button handlers (Обработчики кнопок)
+        self.ui.pushButton_2.clicked.connect(self.connect_server)
+        self.ui.pushButton.clicked.connect(self.send_message)
+        self.ui.pushButton_5.clicked.connect(self.generate_encrypt)
+        self.ui.pushButton_4.clicked.connect(self.clear_panel)
+
