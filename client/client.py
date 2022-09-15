@@ -86,3 +86,11 @@ class Client(QtWidgets.QMainWindow):
         self.ui.pushButton_5.clicked.connect(self.generate_encrypt)
         self.ui.pushButton_4.clicked.connect(self.clear_panel)
 
+    def connect_server(self):
+        try:
+            self.tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.tcp_client.connect((self.ip, self.port))
+            time.sleep(2)
+
+            # Запуск мониторинга входящих сообщений
+
