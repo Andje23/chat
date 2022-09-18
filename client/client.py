@@ -7,8 +7,13 @@ import socket
 import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 from des import *
+from loguru import logger
+
+logger.add("client.log", format="{time} {lever} {message}",
+                                level="DEBUG", rotation="1 MB", compression="zip")
 
 
+@logger.catch
 # Monitoring of incoming message (Мониторинг входящих сообщений)
 class MessageMonitor(QtCore.QThread):
     my_signal = QtCore.pyqtSignal(str)
@@ -29,6 +34,7 @@ class MessageMonitor(QtCore.QThread):
                 self.my_signal.emit(self.message.decode('utf-8'))
 
 
+@logger.catch
 class Client(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
@@ -96,5 +102,20 @@ class Client(QtWidgets.QMainWindow):
             self.message_monitor = MessageMonitor(self.tcp_client, self.my_private_key)
             self.message_monitor.my_signal.connect(self.update_chat)
             self.message_monitor.start()
+
+            # Performing actions with objects (Производим действия с обьектами)
+            self.ui.lineEdit_4.setEnabled(False)
+            self.ui.lineEdit_5.setEnabled(False)
+            self.ui.pushButton_2.setEnabled(False)
+            self.ui.pushButton_5.setEnabled(False)
+            self.ui.pushButton.setEnabled(True)
+            self.ui.lineEdit.setEnabled(True)
+            self.ui.pushButton_4.setEnabled(True)
+        except socket.error as e:
+            self.ui.plainTextEdit.clear()
+            self.ui.plainTextEdit.appendPlainText('Ошибка подключения к серверу!')
+            logger.error("Ошибка подключения к серверу!\n Измените идентификаторы и повторите попытку!", e)
+            self.ui.plainTextEdit.appendPlainText('Измените идентификаторы и повторите попытку!')
+
 
 
