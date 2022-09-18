@@ -117,5 +117,18 @@ class Client(QtWidgets.QMainWindow):
             logger.error("Ошибка подключения к серверу!\n Измените идентификаторы и повторите попытку!", e)
             self.ui.plainTextEdit.appendPlainText('Измените идентификаторы и повторите попытку!')
 
+    @logger.catch
+    def send_message(self):
+        try:
+            message = self.ui.lineEdit.text()
+            if len(message) > 0:
+                crypto_message = rsa.encrypt(message.encode('utf-8'), self.friend_public_key)
+
+                self.ui.plainTextEdit.appendPlainText(f"[Вы]: {message}")
+                self.tcp_client.send(crypto_message)
+                self.ui.lineEdit.clear()
+        except:
+            sys.exit()
+
 
 
