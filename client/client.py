@@ -92,5 +92,9 @@ class Client(QtWidgets.QMainWindow):
             self.tcp_client.connect((self.ip, self.port))
             time.sleep(2)
 
-            # Запуск мониторинга входящих сообщений
+            # Start monitoring incoming message (Запуск мониторинга входящих сообщений)
+            self.message_monitor = MessageMonitor(self.tcp_client, self.my_private_key)
+            self.message_monitor.my_signal.connect(self.update_chat)
+            self.message_monitor.start()
+
 
