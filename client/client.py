@@ -160,5 +160,12 @@ class Client(QtWidgets.QMainWindow):
             self.ui.plainTextEdit_2.appendPlainText('Проверьте правильность вводимых данных!')
             logger.info(f"Проверьте правильность вводимых данных!\n [ip] = {self.ui.lineEdit_4.text()}")
 
+    def closeEvent(self, event):
+        try:
+            self.tcp_client.send(b'exit')
+            self.tcp_client.close()
+        except socket.error as e:
+            logger.error('Ошибка закрытия сединения', e)
+
 
 
