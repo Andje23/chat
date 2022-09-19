@@ -130,5 +130,35 @@ class Client(QtWidgets.QMainWindow):
         except:
             sys.exit()
 
+    def generate_encrypt(self):
+        if len(self.ui.lineEdit_4.text()) > 0:
+            if len(self.ui.lineEdit_5.text()) > 0:
+                (pubkey, privkey) = rsa.newkeys(512)
+
+                with shelve.open('your_id') as file:
+                    file['pubkey'] = pubkey
+                    file['ip'] = str(self.ui.lineEdit_4.text())
+                    file['port'] = int(self.ui.lineEdit_5.text())
+
+                with shelve.open('private') as file:
+                    file['public_key'] = pubkey
+                    file['privkey'] = privkey
+                    file['ip'] = str(self.ui.lineEdit_4.text())
+                    file['port'] = int(self.ui.lineEdit_5.text())
+
+                self.ui.plainTextEdit_2.appendPlainText('Создан "your_id" идентификатор')
+                self.ui.plainTextEdit_2.appendPlainText('Передайте его собеседнику и начните диалог')
+                logger.info(f'Создан "your_id" идентификатор\n Передайте его собеседнику и начните диалог\n'
+                            f'[public_key] = {pubkey}, [privkey] = {privkey}, [ip] = {str(self.ui.lineEdit_4.text())},'
+                            f'[port] = {int(self.ui.lineEdit_5.text())}')
+            else:
+                self.ui.plainTextEdit_2.clear()
+                self.ui.plainTextEdit_2.appendPlainText("Проверьте правильность вводимых данных!")
+                logger.info(f"Проверьте правильность вводимых данных!\n [port] = {self.ui.lineEdit_5.text()}")
+        else:
+            self.ui.plainTextEdit_2.clear()
+            self.ui.plainTextEdit_2.appendPlainText('Проверьте правильность вводимых данных!')
+            logger.info(f"Проверьте правильность вводимых данных!\n [ip] = {self.ui.lineEdit_4.text()}")
+
 
 
