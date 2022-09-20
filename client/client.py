@@ -170,5 +170,8 @@ class Client(QtWidgets.QMainWindow):
     def update_chat(self, value):
         self.ui.plainTextEdit.appendHtml(value)
 
+    def clean_panel(self):
+        self.ui.plainTextEdit.clear()
+
 
 
