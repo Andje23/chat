@@ -90,7 +90,7 @@ class Client(QtWidgets.QMainWindow):
         self.ui.pushButton_2.clicked.connect(self.connect_server)
         self.ui.pushButton.clicked.connect(self.send_message)
         self.ui.pushButton_5.clicked.connect(self.generate_encrypt)
-        self.ui.pushButton_4.clicked.connect(self.clear_panel)
+        self.ui.pushButton_4.clicked.connect(self.clean_panel)
 
     def connect_server(self):
         try:
