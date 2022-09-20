@@ -167,5 +167,8 @@ class Client(QtWidgets.QMainWindow):
         except socket.error as e:
             logger.error('Ошибка закрытия сединения', e)
 
+    def update_chat(self, value):
+        self.ui.plainTextEdit.appendHtml(value)
+
 
 
